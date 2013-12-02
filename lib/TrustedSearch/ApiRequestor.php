@@ -1,32 +1,27 @@
 <?php
 
-class TrustedSearch_ApiRequestor
-{
+class TrustedSearch_ApiRequestor{
   public $_apiPublicKey;
   public $_apiPrivateKey;
 
-  public function __construct($apiPublicKey=null, $apiPrivateKey=null)
-  {
+  public function __construct($apiPublicKey=null, $apiPrivateKey=null){
     $this->_apiPublicKey = $apiPublicKey;
     $this->_apiPrivateKey = $apiPrivateKey;
   }
 
-  public static function apiUrl($url='')
-  {
+  public static function apiUrl($url=''){
     $apiBase = TrustedSearch::getApiBaseUrl(TrustedSearch::$apiEnvironemnt);
     return "$apiBase$url";
   }
 
-  public static function utf8($value)
-  {
+  public static function utf8($value){
     if (is_string($value) && mb_detect_encoding($value, "UTF-8", TRUE) != "UTF-8")
       return utf8_encode($value);
     else
       return $value;
   }
 
-  private static function _encodeObjects($d)
-  {
+  private static function _encodeObjects($d){
     if ($d instanceof TrustedSearch_ApiResource) {
       return self::utf8($d->id);
     } else if ($d === true) {
@@ -43,8 +38,7 @@ class TrustedSearch_ApiRequestor
     }
   }
 
-  public static function encode($arr, $prefix=null)
-  {
+  public static function encode($arr, $prefix=null){
     if (!is_array($arr))
       return $arr;
 
@@ -68,20 +62,17 @@ class TrustedSearch_ApiRequestor
     return implode("&", $r);
   }
 
-  public function request($meth, $url, $params=array(), $body='')
-  {
+  public function request($meth, $url, $params=array(), $body=''){
     // echo "\nPARAMS: ".json_encode($params);
     // echo "\nRESOURCE: ".$url;
     // echo "\nBODY: ".json_encode($body);
     list($rbody, $rcode, $myApiPublicKey, $myApiPrivateKey) = $this->_requestRaw($meth, $url, $params, (is_array($body)?json_encode($body):''));
-//    echo "\nRespone Code: ".($rcode);
-    
+    //    echo "\nRespone Code: ".($rcode);
     $resp = $this->_interpretResponse($rbody, $rcode);
     return array($resp, $myApiPublicKey, $myApiPrivateKey);
   }
 
-  public function handleApiError($rbody, $rcode, $resp)
-  {
+  public function handleApiError($rbody, $rcode, $resp){
     if (!is_array($resp) || !isset($resp['error']))
       throw new TrustedSearch_ApiError("Invalid response object from API: $rbody (HTTP response code was $rcode)", $rcode, $rbody, $resp);
     
@@ -107,8 +98,7 @@ class TrustedSearch_ApiRequestor
     $date = new \DateTime();
     return $date->format($date::RFC1123);
   }
-  private function _requestRaw($meth, $url, $params = array(), $body = '')
-  {
+  private function _requestRaw($meth, $url, $params = array(), $body = ''){
     $apiPublicKey = $this->_apiPublicKey;
     $apiPrivateKey = $this->_apiPrivateKey;
     if (!$apiPublicKey){
@@ -228,8 +218,7 @@ class TrustedSearch_ApiRequestor
     return $hmac;
   }
 
-  private function _interpretResponse($rbody, $rcode)
-  {
+  private function _interpretResponse($rbody, $rcode){
     
     try {
       $resp = json_decode($rbody, true);
@@ -243,8 +232,7 @@ class TrustedSearch_ApiRequestor
     return $resp;
   }
 
-  private function _curlRequest($meth, $absUrl, $headers, $params, $body = '')
-  {
+  private function _curlRequest($meth, $absUrl, $headers, $params, $body = ''){
     $curl = curl_init();
     $meth = strtolower($meth);
     $opts = array();
@@ -261,10 +249,9 @@ class TrustedSearch_ApiRequestor
           $absUrl = "$absUrl?$encoded";
       }
       $opts[CURLOPT_POST] = 1;
+      $opts[CURLOPT_POSTFIELDS] = self::encode($body);
 
-      if(!empty($body)){
-        $opts[CURLOPT_POSTFIELDS] = self::encode($body);  
-      }
+
     }else if ($meth == 'put')  {
       $opts[CURLOPT_CUSTOMREQUEST] = 'PUT';
       if (count($params) > 0) {
@@ -320,8 +307,7 @@ class TrustedSearch_ApiRequestor
     return array($rbody, $rcode);
   }
 
-  public function handleCurlError($errno, $message)
-  {
+  public function handleCurlError($errno, $message){
     $apiBase = TrustedSearch::$apiBase;
     switch ($errno) {
     case CURLE_COULDNT_CONNECT:

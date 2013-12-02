@@ -44,14 +44,14 @@ class TrustedSearch_LocalBusinessTest extends TrustedSearchTestCase{
 					'languagesSpoken'   => 'english, japanese, spanish',
 					'hoursOfOperation'  => 'MF08001700H',
 					'numberEmployees' 	=> 23,
-					'logoUrl'           => "http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png",
-					'logoSquareUrl'     => 'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
+					'logoUrl'           => "http://trustedsearch.org/images/imgTS_Logo.png",
+					'logoSquareUrl'     => 'http://trustedsearch.org/images/imgTS_Logo.png',
 					'imageUrl'=> array(
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
 						),
 					'videoUrl' => 'http://www.youtube.com/watch?v=cXuTiAHdxTg'
 				)
@@ -97,35 +97,36 @@ class TrustedSearch_LocalBusinessTest extends TrustedSearchTestCase{
 					'languagesSpoken'   => 'english, japanese, spanish',
 					'hoursOfOperation'  => 'MF08001700H',
 					'numberEmployees' 	=> 23,
-					'logoUrl'           => "http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png",
-					'logoSquareUrl'     => 'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
+					'logoUrl'           => "http://trustedsearch.org/images/imgTS_Logo.png",
+					'logoSquareUrl'     => 'http://trustedsearch.org/images/imgTS_Logo.png',
 					'imageUrl'=> array(
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
-							'http://localmarketlaunch.com/wp-content/uploads/2013/09/LML-Logo-Large-300x120.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
+							'http://trustedsearch.org/images/imgTS_Logo.png',
 						),
 					'videoUrl' => 'http://www.youtube.com/watch?v=cXuTiAHdxTg'
 				)
 			)
 		);  // end data array
 	
-	    TrustedSearch::setApiPublicKey('d7a6454ef686dfad24e08d773bc273eb');
-	    TrustedSearch::setApiPrivateKey('7lOx6Swg9e0yTjQz5laIfJQ9');
+	    TrustedSearch::setApiPublicKey($this->getTestCredentials('public_key'));
+	    TrustedSearch::setApiPrivateKey($this->getTestCredentials('private_key'));
 	    TrustedSearch::setApiEnvironment('local');
 	    TrustedSearch::setApiVersion('1');
 
 	    try {
 	      $locations = TrustedSearch_LocalBusiness::create($data);
 	      
-	      echo $locations[0]['externalId'];
-	      echo $locations[0]['uuid'];
-	      echo $locations[0]['status'];
+	      $this->assertEquals(count($locations), 2, 'There should be two results.');
+	      $this->assertTrue(!empty($locations[0]['externalId']), 'There should be an external id present.');
+	      $this->assertTrue(!empty($locations[0]['uuid']), "There should be uuid returned.");
+	      $this->assertTrue(!empty($locations[0]['status']), "There should be status returned.");
 
-	      echo $locations[1]['externalId'];
-	      echo $locations[1]['uuid'];
-	      echo $locations[1]['status'];
+	      $this->assertTrue(!empty($locations[1]['externalId']), 'There should be an external id present.');
+	      $this->assertTrue(!empty($locations[1]['uuid']), "There should be uuid returned.");
+	      $this->assertTrue(!empty($locations[1]['status']), "There should be status returned.");
 
 
 	    } catch (TrustedSearch_AuthenticationError $e) {

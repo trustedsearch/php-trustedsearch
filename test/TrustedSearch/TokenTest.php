@@ -34,8 +34,8 @@ class TrustedSearch_TokenTest extends TrustedSearchTestCase
     TrustedSearch::setApiVersion('1');
 
     //
-    $username = 'test@test.com';
-    $password = 'test1234';
+    $username = $this->getTestCredentials('email');
+    $password = $this->getTestCredentials('password');
 
     try {
       $token = TrustedSearch_Token::get($username, $password);
