@@ -34,7 +34,6 @@ require(dirname(__FILE__) . '/TrustedSearch/Object.php');
 require(dirname(__FILE__) . '/TrustedSearch/ApiRequestor.php');
 require(dirname(__FILE__) . '/TrustedSearch/ApiResource.php');
 require(dirname(__FILE__) . '/TrustedSearch/AttachedObject.php');
-require(dirname(__FILE__) . '/TrustedSearch/List.php');
 
 // TrustedSearch API Resources
 require(dirname(__FILE__) . '/TrustedSearch/Resources/Token.php');

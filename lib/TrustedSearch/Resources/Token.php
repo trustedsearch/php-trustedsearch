@@ -11,8 +11,7 @@ class TrustedSearch_Token extends TrustedSearch_ApiResource
    * @param  String $apiPrivateKey [account private key]
    * @return Object                Token object
    */
-  public static function get($username, $password, $apiPublicKey=null, $apiPrivateKey=null)
-  {
+  public static function get($username, $password, $apiPublicKey=null, $apiPrivateKey=null){
     $class = get_class();
     $path = array('tokens', $username);
     $params = array('pwd'=>$password);

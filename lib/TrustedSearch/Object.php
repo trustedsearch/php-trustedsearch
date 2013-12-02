@@ -48,6 +48,7 @@ class TrustedSearch_Object implements ArrayAccess{
     if (!self::$_permanentAttributes->includes($k))
       $this->_unsavedValues->add($k);
   }
+  
   public function __isset($k){
     return isset($this->_values[$k]);
   }

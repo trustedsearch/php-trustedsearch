@@ -9,8 +9,7 @@ class TrustedSearch_LocalBusiness extends TrustedSearch_ApiResource{
 	 * @param  string $apiPrivateKey [optional private key]
 	 * @return TrustedSearch LocalBusiness Object
 	 */
-	public static function create($data=null, $apiPublicKey=null, $apiPrivateKey=null)
-	{
+	public static function create($data=null, $apiPublicKey=null, $apiPrivateKey=null){
 	  $class = get_class();
 	  return self::_scopedCreate($class, array(), $data, $apiPublicKey, $apiPrivateKey);
 	}
