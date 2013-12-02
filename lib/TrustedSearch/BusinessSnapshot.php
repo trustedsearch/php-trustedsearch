@@ -2,12 +2,20 @@
 
 class TrustedSearch_BusinessSnapshot extends TrustedSearch_ApiResource{
 
-	public static function get($uuid = null, $since = null, $apiPublicKey=null, $apiPrivateKey=null){
+	/**
+	 * Get the latest snapshot data for a given location
+	 * @param  string $locationId     required location id
+	 * @param  integer $since         [optional unix timestamp to retrieve snapshots from this point in time defaults to all time]
+	 * @param  string $apiPublicKey  [optional key]
+	 * @param  string $apiPrivateKey [optional key]
+	 * @return TrustedSearch Object           
+	 */
+	public static function get($locationId = null, $since = null, $apiPublicKey=null, $apiPrivateKey=null){
 		$path = array();
 		$params = array();
 
-		if($uuid){
-			$path = array($uuid);
+		if($locationId){
+			$path = array($locationId);
 		}
 
 		if($since){
@@ -20,10 +28,10 @@ class TrustedSearch_BusinessSnapshot extends TrustedSearch_ApiResource{
 
 	/**
 	 * Simulates the changes made by trustedsearch location fulfillment.
-	 * @param  [type] $locationId          [description]
-	 * @param  [type] $apiPublicKey  [description]
-	 * @param  [type] $apiPrivateKey [description]
-	 * @return [type]                [description]
+	 * @param  string $locationId    required location id
+	 * @param  string $apiPublicKey  [optional public key]
+	 * @param  string $apiPrivateKey [optional private key]
+	 * @return array                array w/ response, and public/private keys
 	 */
 	public static function simulate($locationId, $apiPublicKey=null, $apiPrivateKey=null){
 		$path = array('test-fulfillment', $locationId);
