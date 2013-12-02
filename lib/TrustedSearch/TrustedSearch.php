@@ -22,13 +22,11 @@ abstract class TrustedSearch
 
   const VERSION = '1.0.0';
 
-  public static function getApiKey()
-  {
+  public static function getApiKey(){
     return self::$apiKey;
   }
 
-  public static function getApiBaseUrl($environment)
-  {
+  public static function getApiBaseUrl($environment){
     return self::$environmentSettings[$environment]['baseUrl'];
   }
 
@@ -36,32 +34,27 @@ abstract class TrustedSearch
     self::$apiPublicKey = $apiPublicKey;
     self::$apiPrivateKey = $apiPrivateKey;
   }
-  public static function setApiPublicKey($apiPublicKey)
-  {
+  public static function setApiPublicKey($apiPublicKey){
     self::$apiPublicKey = $apiPublicKey;
     
   }
 
-  public static function setApiPrivateKey($apiPrivateKey)
-  {
+  public static function setApiPrivateKey($apiPrivateKey){
     self::$apiPrivateKey = $apiPrivateKey;
   }
 
-  public static function setApiEnvironment($apiEnvironemnt)
-  {
+  public static function setApiEnvironment($apiEnvironemnt){
     self::$apiEnvironemnt = $apiEnvironemnt;
   }
 
-  public static function getApiVersion()
-  {
+  public static function getApiVersion(){
     if (!self::$apiVersion){
       throw new TrustedSearch_AuthenticationError('No API Version provided.  (HINT: set your API key using "TrustedSearch::setApiVersion(<API-VERSION>)".  You can generate API keys from the TrustedSearch web interface.  See https://trustedsearch.org/api for details, or email support@trustedsearch.org if you have any questions.');
     }
     return self::$apiVersion;
   }
 
-  public static function setApiVersion($apiVersion)
-  {
+  public static function setApiVersion($apiVersion){
     self::$apiVersion = $apiVersion;
   }
 

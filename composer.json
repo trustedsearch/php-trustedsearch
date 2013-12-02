@@ -26,6 +26,8 @@
   "autoload": {
     "classmap": [
       "lib/TrustedSearch/",
+      "lib/TrustedSearch/Resources/",
+      "lib/TrustedSearch/Errors/",
       "test/TrustedSearch/TestCase.php"
     ]
   }

@@ -1,9 +1,7 @@
 <?php
 
-class TrustedSearch_AttachedObject extends TrustedSearch_Object
-{
-  public function replaceWith($properties)
-  {
+class TrustedSearch_AttachedObject extends TrustedSearch_Object{
+  public function replaceWith($properties){
     $removed = array_diff(array_keys($this->_values), array_keys($properties));
     // Don't unset, but rather set to null so we send up '' for deletion.
     foreach ($removed as $k) {

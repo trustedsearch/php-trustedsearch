@@ -1,12 +1,10 @@
 <?php
 
-class TrustedSearch_Object implements ArrayAccess
-{
+class TrustedSearch_Object implements ArrayAccess{
   public static $_permanentAttributes;
   public static $_nestedUpdatableAttributes;
 
-  public static function init()
-  {
+  public static function init(){
     self::$_permanentAttributes = new TrustedSearch_Util_Set(array('_apiPublicKey','_apiPrivateKey', 'id'));
     self::$_nestedUpdatableAttributes = new TrustedSearch_Util_Set(array('metadata'));
   }
@@ -23,8 +21,7 @@ class TrustedSearch_Object implements ArrayAccess
   protected $_transientValues;
   protected $_retrieveOptions;
 
-  public function __construct($apiPublicKey=null, $apiPrivateKey=null)
-  {
+  public function __construct($apiPublicKey=null, $apiPrivateKey=null){
     $this->_apiPublicKey = $apiPublicKey;
     $this->_apiPrivateKey = $apiPrivateKey;
     $this->_values = array();
@@ -34,8 +31,7 @@ class TrustedSearch_Object implements ArrayAccess
   }
 
   // Standard accessor magic methods
-  public function __set($k, $v)
-  {
+  public function __set($k, $v){
     if ($v === ""){
       throw new InvalidArgumentException(
         'You cannot set \''.$k.'\'to an empty string. '
@@ -52,18 +48,15 @@ class TrustedSearch_Object implements ArrayAccess
     if (!self::$_permanentAttributes->includes($k))
       $this->_unsavedValues->add($k);
   }
-  public function __isset($k)
-  {
+  public function __isset($k){
     return isset($this->_values[$k]);
   }
-  public function __unset($k)
-  {
+  public function __unset($k){
     unset($this->_values[$k]);
     $this->_transientValues->add($k);
     $this->_unsavedValues->discard($k);
   }
-  public function __get($k)
-  {
+  public function __get($k){
     if (array_key_exists($k, $this->_values)) {
       return $this->_values[$k];
     } else if ($this->_transientValues->includes($k)) {
@@ -79,46 +72,38 @@ class TrustedSearch_Object implements ArrayAccess
   }
 
   // ArrayAccess methods
-  public function offsetSet($k, $v)
-  {
+  public function offsetSet($k, $v){
     $this->$k = $v;
   }
 
-  public function offsetExists($k)
-  {
+  public function offsetExists($k){
     return array_key_exists($k, $this->_values);
   }
 
-  public function offsetUnset($k)
-  {
+  public function offsetUnset($k){
     unset($this->$k);
   }
-  public function offsetGet($k)
-  {
+  public function offsetGet($k){
     return array_key_exists($k, $this->_values) ? $this->_values[$k] : null;
   }
 
-  public function keys()
-  {
+  public function keys(){
     return array_keys($this->_values);
   }
 
   // This unfortunately needs to be public to be used in Util.php
-  public static function scopedConstructFrom($class, $values, $apiPublicKey=null, $apiPrivateKey=null)
-  {
+  public static function scopedConstructFrom($class, $values, $apiPublicKey=null, $apiPrivateKey=null){
     $obj = new $class(isset($values['id']) ? $values['id'] : null, $apiPublicKey, $apiPrivateKey);
     $obj->refreshFrom($values, $apiPublicKey, $apiPrivateKey);
     return $obj;
   }
 
-  public static function constructFrom($values, $apiPublicKey=null, $apiPrivateKey=null)
-  {
+  public static function constructFrom($values, $apiPublicKey=null, $apiPrivateKey=null){
     $class = get_class();
     return self::scopedConstructFrom($class, $values, $apiPublicKey, $apiPrivateKey);
   }
 
-  public function refreshFrom($values, $apiPublicKey, $apiPrivateKey, $partial=false)
-  {
+  public function refreshFrom($values, $apiPublicKey, $apiPrivateKey, $partial=false){
     $this->_apiPublicKey = $apiPublicKey;
     $this->_apiPrivateKey = $apiPrivateKey;
 
@@ -148,8 +133,7 @@ class TrustedSearch_Object implements ArrayAccess
     }
   }
 
-  public function serializeParameters()
-  {
+  public function serializeParameters(){
     $params = array();
     if ($this->_unsavedValues) {
       foreach ($this->_unsavedValues->toArray() as $k) {
@@ -171,33 +155,28 @@ class TrustedSearch_Object implements ArrayAccess
   }
 
   // Pretend to have late static bindings, even in PHP 5.2
-  protected function _lsb($method)
-  {
+  protected function _lsb($method){
     $class = get_class($this);
     $args = array_slice(func_get_args(), 1);
     return call_user_func_array(array($class, $method), $args);
   }
-  protected static function _scopedLsb($class, $method)
-  {
+  protected static function _scopedLsb($class, $method){
     $args = array_slice(func_get_args(), 2);
     return call_user_func_array(array($class, $method), $args);
   }
 
-  public function __toJSON()
-  {
+  public function __toJSON(){
     if (defined('JSON_PRETTY_PRINT'))
       return json_encode($this->__toArray(true), JSON_PRETTY_PRINT);
     else
       return json_encode($this->__toArray(true));
   }
 
-  public function __toString()
-  {
+  public function __toString(){
     return $this->__toJSON();
   }
 
-  public function __toArray($recursive=false)
-  {
+  public function __toArray($recursive=false){
     if ($recursive)
       return TrustedSearch_Util::convertTrustedSearchObjectToArray($this->_values);
     else

@@ -1,9 +1,8 @@
 <?php
 
-abstract class TrustedSearch_Util
-{
-  public static function isList($array)
-  {
+abstract class TrustedSearch_Util{
+  
+  public static function isList($array){
     if (!is_array($array))
       return false;
 
@@ -15,8 +14,7 @@ abstract class TrustedSearch_Util
     return true;
   }
 
-  public static function convertTrustedSearchObjectToArray($values)
-  {
+  public static function convertTrustedSearchObjectToArray($values){
     $results = array();
     foreach ($values as $k => $v) {
       // FIXME: this is an encapsulation violation
@@ -36,8 +34,7 @@ abstract class TrustedSearch_Util
     return $results;
   }
 
-  public static function convertToTrustedSearchObject($resp, $apiKey)
-  {
+  public static function convertToTrustedSearchObject($resp, $apiKey){
     $types = array(
       'token' => 'TrustedSearch_Token',
       'local_business' => 'TrustedSearch_LocalBusiness',

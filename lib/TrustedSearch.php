@@ -23,11 +23,11 @@ require(dirname(__FILE__) . '/TrustedSearch/Util.php');
 require(dirname(__FILE__) . '/TrustedSearch/Util/Set.php');
 
 // Errors
-require(dirname(__FILE__) . '/TrustedSearch/Error.php');
-require(dirname(__FILE__) . '/TrustedSearch/ApiError.php');
-require(dirname(__FILE__) . '/TrustedSearch/ApiConnectionError.php');
-require(dirname(__FILE__) . '/TrustedSearch/AuthenticationError.php');
-require(dirname(__FILE__) . '/TrustedSearch/InvalidRequestError.php');
+require(dirname(__FILE__) . '/TrustedSearch/Errors/Error.php');
+require(dirname(__FILE__) . '/TrustedSearch/Errors/ApiError.php');
+require(dirname(__FILE__) . '/TrustedSearch/Errors/ApiConnectionError.php');
+require(dirname(__FILE__) . '/TrustedSearch/Errors/AuthenticationError.php');
+require(dirname(__FILE__) . '/TrustedSearch/Errors/InvalidRequestError.php');
 
 // Plumbing
 require(dirname(__FILE__) . '/TrustedSearch/Object.php');
@@ -38,7 +38,7 @@ require(dirname(__FILE__) . '/TrustedSearch/AttachedObject.php');
 require(dirname(__FILE__) . '/TrustedSearch/List.php');
 
 // TrustedSearch API Resources
-require(dirname(__FILE__) . '/TrustedSearch/Token.php');
-require(dirname(__FILE__) . '/TrustedSearch/LocalBusiness.php');
-require(dirname(__FILE__) . '/TrustedSearch/BusinessSnapshot.php');
+require(dirname(__FILE__) . '/TrustedSearch/Resources/Token.php');
+require(dirname(__FILE__) . '/TrustedSearch/Resources/LocalBusiness.php');
+require(dirname(__FILE__) . '/TrustedSearch/Resources/BusinessSnapshot.php');
 
