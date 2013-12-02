@@ -18,9 +18,11 @@ Simple usage looks like:
 
 Please see [http://developers.trustedsearch.org/](http://developers.trustedsearch.org) for up-to-date documentation.
 
+Packagist: [https://packagist.org/packages/trustedsearch/php-trustedsearch](https://packagist.org/packages/trustedsearch/php-trustedsearch)
+
 ## Tests
 
-In order to run tests you have to install SimpleTest (http://packagist.org/packages/vierbergenlars/simpletest) via Composer (http://getcomposer.org/) (recommended way):
+In order to run tests you have to install PHPUnit (https://packagist.org/packages/phpunit/phpunit) via Composer (http://getcomposer.org/) (recommended way):
 
     composer.phar update --dev
 
