@@ -1,0 +1,32 @@
+{
+  "name": "trustedsearch/php-trustedsearch",
+  "description": "TRUSTEDSearch PHP Library",
+  "keywords": [
+    "trustedsearch",
+    "local business listings",
+    "api"
+  ],
+  "homepage": "http://trustedsearch.org/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "TRUSTEDSearch Team",
+      "homepage": "https://github.com/trustedsearch/php-trustedsearch/contributors"
+    }
+  ],
+  "require": {
+    "php": ">=5.2",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+      "phpunit/phpunit": "3.7.*"
+  },
+  "autoload": {
+    "classmap": [
+      "lib/TrustedSearch/",
+      "test/TrustedSearch/TestCase.php"
+    ]
+  }
+}
