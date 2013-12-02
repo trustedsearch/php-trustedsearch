@@ -33,7 +33,6 @@ require(dirname(__FILE__) . '/TrustedSearch/Errors/InvalidRequestError.php');
 require(dirname(__FILE__) . '/TrustedSearch/Object.php');
 require(dirname(__FILE__) . '/TrustedSearch/ApiRequestor.php');
 require(dirname(__FILE__) . '/TrustedSearch/ApiResource.php');
-require(dirname(__FILE__) . '/TrustedSearch/SingletonApiResource.php');
 require(dirname(__FILE__) . '/TrustedSearch/AttachedObject.php');
 require(dirname(__FILE__) . '/TrustedSearch/List.php');
 
