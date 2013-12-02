@@ -29,6 +29,7 @@ class TrustedSearch_BusinessSnapshotTest extends TrustedSearchTestCase{
 		    try {
 
 		    	$uuid = '45c907bc-6d2f-5f62-9610-5395858d41a0'; //Take from response above.
+		    	
 		      	$response = TrustedSearch_BusinessSnapshot::simulate($uuid);
 		      	var_dump(($response[0]));
 

@@ -20,7 +20,7 @@ class TrustedSearch_BusinessSnapshot extends TrustedSearch_ApiResource{
 
 	/**
 	 * Simulates the changes made by trustedsearch location fulfillment.
-	 * @param  [type] $uuid          [description]
+	 * @param  [type] $locationId          [description]
 	 * @param  [type] $apiPublicKey  [description]
 	 * @param  [type] $apiPrivateKey [description]
 	 * @return [type]                [description]
