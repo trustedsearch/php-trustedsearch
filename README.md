@@ -206,7 +206,50 @@ echo json_encode($response->getData());
 
 ```
 
+### Error Handling
+Exceptions are thrown when there is an api issue.
 
+```php
+
+    try {
+      $token = TrustedSearch_Token::get($username, $password);
+      //var_dump($token['userSettings']['client_view']);
+    } catch (TrustedSearch_AuthenticationError $e) {
+    	echo $e->getMessage();
+      echo "HI";
+	    $this->assertEquals(401, $e->getCode());
+    }
+
+```
+
+#### Exceptions
+
+* TrustedSearch_Error  ** Refer to [/lib/TrustedSearch/Errors/Error.php]() for special exception handle methods
+* TrustedSearch_ApiConnectionError
+* TrustedSearch_ApiError
+* TrustedSearch_AuthenticationError
+* TrustedSearch_InvalidRequestError
+
+
+Output: (Body is formatted for readability.)
+
+```javascript
+
+Message: Bummer, we couldn't save this record. You might have to fix a few things first and try again.
+Body:
+{	
+	"status"=>"error", 
+	"code"=>409, 
+	"message"=>"Bummer, we couldn't save this record. You might have to fix a few things first and try again.", 
+	"error"=>"ModelSaveFailedException", 
+	"debug"=>"Model was unable to save, check validation errors.", 
+	"validations"=>{"uuid"=>["The uuid field is required."], 
+	"business_name"=>["The business name field is required."]}, 
+	"data"=>[]
+}
+Code: 409
+
+```
 
 ## Tests
 
