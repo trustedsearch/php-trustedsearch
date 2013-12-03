@@ -42,7 +42,36 @@ Then update your composer
 	TrustedSearch::setApiPublicKey($publicKey);
 	TrustedSearch::setApiPrivateKey($privateKey);
     TrustedSearch::setApiEnvironment('sandbox');  //Options are sandbox or production
-    TrustedSearch::setApiVersion('1'); //You MUST set this 1 is currently the only option
+    TrustedSearch::setApiVersion('1'); //You MUST set this. 1 is currently the only option. There is no default.
+
+```
+
+#### Get All Business for all users locations
+See the [API documentation](http://developers.trustedsearch.org/#/get-business-updates) for a list of parameters for each API resource.
+
+```php
+$resource = TrustedSearch_DirectoryListing::get();
+$data = $resource->getData();
+echo json_encode($data);
+```
+
+#### Get Business Updates for single location
+See the [API documentation](http://developers.trustedsearch.org/#/get-business-updates) for a list of parameters for each API resource.
+
+```php
+$testLocation = '45c907bc-6d2f-5f62-9610-5395858d41a0';
+$resource = TrustedSearch_DirectoryListing::get($testLocation);
+$data = $resource->getData();
+echo json_encode($data);
+```
+
+#### Get Business Updates since epoch 1380611103
+See the [API documentation](http://developers.trustedsearch.org/#/get-business-updates) for a list of parameters for each API resource.
+
+```php
+$resource = TrustedSearch_DirectoryListing::since(1380611103);
+$data = $resource->getData();
+echo json_encode($data);
 
 ```
 

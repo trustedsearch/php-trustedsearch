@@ -31,7 +31,7 @@ class TrustedSearch_DirectoryListingTest extends TrustedSearchTestCase{
 	    TrustedSearch::setApiVersion('1');
 
 	    try {
-	      $resource = TrustedSearch_DirectoryListing::get(null, 1385964120);
+	      $resource = TrustedSearch_DirectoryListing::since(1385964120);
 	      $data = $resource->getData();
 	      $this->assertTrue(array_key_exists('uuid', $data[0]));
 	      $this->assertTrue(array_key_exists('externalId', $data[0]));
