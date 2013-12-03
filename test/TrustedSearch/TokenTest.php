@@ -19,7 +19,8 @@ class TrustedSearch_TokenTest extends TrustedSearchTestCase
       //var_dump($token['userSettings']['client_view']);
     } catch (TrustedSearch_AuthenticationError $e) {
     	echo $e->getMessage();
-	    $this->assertEquals(401, $e->getHttpStatus());
+      echo "HI";
+	    $this->assertEquals(401, $e->getCode());
     }
   }
 
@@ -33,17 +34,15 @@ class TrustedSearch_TokenTest extends TrustedSearchTestCase
     TrustedSearch::setApiEnvironment('local');
     TrustedSearch::setApiVersion('1');
 
-    //
     $username = $this->getTestCredentials('email');
     $password = $this->getTestCredentials('password');
 
     try {
-      $token = TrustedSearch_Token::get($username, $password);
-      $this->assertTrue(!empty($token['token']), 'Token field should exist');
-      //var_dump($token['userSettings']['client_view']);
+      $resource = TrustedSearch_Token::get($username, $password);
+      $data = $resource->getData();
+      $this->assertTrue(!empty($data['token']), 'Token field should exist');
     } catch (TrustedSearch_AuthenticationError $e) {
-    	echo $e->getMessage();
-	    
+    	echo $e->getMessage();   
     }
   }
 }
