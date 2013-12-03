@@ -98,35 +98,45 @@ abstract class TrustedSearch_ApiResource extends TrustedSearch_Object{
     }
   }
 
-  protected static function _get($class, $path = array(), $params=array(), $apiPublicKey=null, $apiPrivateKey=null){
+  protected static function _get($class, $path = array(), $params=array(), $apiPublicKey=null, $apiPrivateKey=null, $authenticate = true){
     $instance = new $class(null, $apiPublicKey, $apiPrivateKey);
     $instance->setPath($path);
     $instance->setParams($params);
     $url = $instance->instanceUrl();
     $requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
+    if(!$authenticate){
+      $requestor->disableAuthentication();  
+    }
     $response = $requestor->request('get', $url, $params);
     $instance->setResponse($response);
     return $instance;
 
   }
 
-  protected static function _put($class, $path = array(), $params=array(), $body='', $apiPublicKey=null, $apiPrivateKey=null){
+  protected static function _put($class, $path = array(), $params=array(), $body='', $apiPublicKey=null, $apiPrivateKey=null, $authenticate = true){
     $instance = new $class(null, $apiPublicKey, $apiPrivateKey);
     $instance->setPath($path);
     $instance->setParams($params);
     $url = $instance->instanceUrl();
     $requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
+    if(!$authenticate){
+      $requestor->disableAuthentication();  
+    }
     $response = $requestor->request('put', $url, $params, $body);
     $instance->setResponse($response);
     return $instance;
   }
 
-  protected static function _post($class, $path = array(), $params=array(), $body='', $apiPublicKey=null, $apiPrivateKey=null){
+  protected static function _post($class, $path = array(), $params=array(), $body='', $apiPublicKey=null, $apiPrivateKey=null, $authenticate = true){
     $instance = new $class(null, $apiPublicKey, $apiPrivateKey);
     $instance->setPath($path);
     $instance->setParams($params);
     $url = $instance->instanceUrl();
     $requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
+    if(!$authenticate){
+      $requestor->disableAuthentication();  
+    }
+    
     $response = $requestor->request('post', $url, $params, $body);
     $instance->setResponse($response);
     return $instance;

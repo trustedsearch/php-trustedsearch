@@ -15,7 +15,7 @@ class TrustedSearch_Token extends TrustedSearch_ApiResource
     $class = get_class();
     $path = array('token', $username);
     $params = array('pwd'=>$password);
-    return self::_get($class, $path, $params, $apiPublicKey, $apiPrivateKey);
+    return self::_get($class, $path, $params, $apiPublicKey, $apiPrivateKey, false);
   }
 
   

@@ -7,6 +7,7 @@ class TrustedSearch_ApiRequestor{
   protected $_responseBodyRaw;
   protected $_responseCode;
   protected $_responseHeaders;
+  protected $_authenticate = true;
 
   protected $_request;
 
@@ -29,21 +30,25 @@ class TrustedSearch_ApiRequestor{
   private function _requestRaw($meth, $url, $params = array(), $body = ''){
     $apiPublicKey = $this->_apiPublicKey;
     $apiPrivateKey = $this->_apiPrivateKey;
-    if (!$apiPublicKey){
-      $apiPublicKey = TrustedSearch::$apiPublicKey;
+    //If authenticate is enabled. Then help out the developer by letting them know if they forgot to set api keys
+    if($this->_authenticate){
+      if (!$apiPublicKey){
+        $apiPublicKey = TrustedSearch::$apiPublicKey;
+      }
+        
+      if (!$apiPublicKey){
+        throw new TrustedSearch_AuthenticationError('No API Public key provided.  (HINT: set your API key using "TrustedSearch::setApiPublicKey(<API-KEY>)".  You can generate API keys from the TrustedSearch web interface.  See https://trustedsearch.org/api for details, or email support@trustedsearch.org if you have any questions.');
+      }
+        
+      if (!$apiPrivateKey){
+        $apiPrivateKey = TrustedSearch::$apiPrivateKey;  
+      }
+        
+      if (!$apiPrivateKey){
+        throw new TrustedSearch_AuthenticationError('No API Private key provided.  (HINT: set your API key using "TrustedSearch::setApiPrivateKey(<API-KEY>)".  You can generate API keys from the TrustedSearch web interface.  See https://trustedsearch.org/api for details, or email support@trustedsearch.org if you have any questions.');
+      }  
     }
-      
-    if (!$apiPublicKey){
-      throw new TrustedSearch_AuthenticationError('No API Public key provided.  (HINT: set your API key using "TrustedSearch::setApiPublicKey(<API-KEY>)".  You can generate API keys from the TrustedSearch web interface.  See https://trustedsearch.org/api for details, or email support@trustedsearch.org if you have any questions.');
-    }
-      
-    if (!$apiPrivateKey){
-      $apiPrivateKey = TrustedSearch::$apiPrivateKey;  
-    }
-      
-    if (!$apiPrivateKey){
-      throw new TrustedSearch_AuthenticationError('No API Private key provided.  (HINT: set your API key using "TrustedSearch::setApiPrivateKey(<API-KEY>)".  You can generate API keys from the TrustedSearch web interface.  See https://trustedsearch.org/api for details, or email support@trustedsearch.org if you have any questions.');
-    }
+    
 
     if (!TrustedSearch::getApiVersion()){
       throw new TrustedSearch_AuthenticationError('No API Version specified.  (HINT: set your API key using "TrustedSearch::setApiVersion(<API-KEY>)".  You can generate API keys from the TrustedSearch web interface.  See https://trustedsearch.org/api for details, or email support@trustedsearch.org if you have any questions.');
@@ -71,36 +76,35 @@ class TrustedSearch_ApiRequestor{
     if (TrustedSearch::$apiVersion){
       $headers[] = 'TrustedSearch-Version: ' . TrustedSearch::$apiVersion;
     }
+    
+    if($this->_authenticate){
+      //Handle Authentication/Signature
+      switch (TrustedSearch::getApiVersion()) {
+        case '1':
 
-    //Handle Authentication/Signature
-    switch (TrustedSearch::getApiVersion()) {
-      case '1':
+          $timestamp = time();
+          $request = array(
+            'resource' => $url,
+            'content' => $body,
+            'timestamp' => $timestamp,
+            'privateKey' => TrustedSearch::$apiPrivateKey
+          );
 
-        $timestamp = time();
-        $request = array(
-          'resource' => $url,
-          'content' => $body,
-          'timestamp' => $timestamp,
-          'privateKey' => TrustedSearch::$apiPrivateKey
-        );
-
-        $signature = $this->_generateV1Signature($request);
-        $params = array_merge($params, array(
-          'signature'=>$signature, 
-          'apikey'=>TrustedSearch::$apiPublicKey,
-          'timestamp' => $timestamp
-          )
-        );
-        # code...
-        break;
-      
-      default:
-        # code...
-        break;
+          $signature = $this->_generateV1Signature($request);
+          $params = array_merge($params, array(
+            'signature'=>$signature, 
+            'apikey'=>TrustedSearch::$apiPublicKey,
+            'timestamp' => $timestamp
+            )
+          );
+          # code...
+          break;
+        
+        default:
+          # code...
+          break;
+      }
     }
-
-    //$body = json_encode($body);
-
       
     list($rbody, $rcode, $rhead) = $this->_curlRequest($meth, $absUrl, $headers, $params, $body);
 
@@ -115,6 +119,10 @@ class TrustedSearch_ApiRequestor{
     
     
     return $signature;
+  }
+
+  public function disableAuthentication(){
+      $this->_authenticate = false;
   }
 
   /**
