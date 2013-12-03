@@ -12,10 +12,15 @@ class TrustedSearch_DirectoryListingTest extends TrustedSearchTestCase{
 	    try {
 	      $resource = TrustedSearch_DirectoryListing::get();
 	      $data = $resource->getData();
-	      $this->assertTrue(array_key_exists('uuid', $data[0]));
-	      $this->assertTrue(array_key_exists('externalId', $data[0]));
-	      $this->assertTrue(array_key_exists('received', $data[0]));
-	      $this->assertTrue(array_key_exists('business', $data[0]));
+	      if(!empty($data)){
+
+		      $this->assertTrue(array_key_exists('uuid', $data[0]));
+		      $this->assertTrue(array_key_exists('externalId', $data[0]));
+		      $this->assertTrue(array_key_exists('received', $data[0]));
+		      $this->assertTrue(array_key_exists('business', $data[0]));	
+	      }else{
+	      	$this->assertTrue(false, 'Data should come back from testGetDirectoryListing');
+	      }
 
 	    } catch (TrustedSearch_AuthenticationError $e) {
 	    	echo $e->getMessage();
@@ -31,13 +36,17 @@ class TrustedSearch_DirectoryListingTest extends TrustedSearchTestCase{
 	    TrustedSearch::setApiVersion('1');
 
 	    try {
-	      $resource = TrustedSearch_DirectoryListing::since(1385964120);
-	      $data = $resource->getData();
-	      $this->assertTrue(array_key_exists('uuid', $data[0]));
-	      $this->assertTrue(array_key_exists('externalId', $data[0]));
-	      $this->assertTrue(array_key_exists('received', $data[0]));
-	      $this->assertTrue(array_key_exists('business', $data[0]));
-
+			$resource = TrustedSearch_DirectoryListing::since(1385964120);
+			$data = $resource->getData();
+			if(!empty($data)){
+				$this->assertTrue(array_key_exists('uuid', $data[0]));
+				$this->assertTrue(array_key_exists('externalId', $data[0]));
+				$this->assertTrue(array_key_exists('received', $data[0]));
+				$this->assertTrue(array_key_exists('business', $data[0]));	
+			}else{
+				$this->assertTrue(false, 'Data should come back from testGetDirectoryListingSince');
+			}
+	
 	    } catch (TrustedSearch_AuthenticationError $e) {
 	    	echo $e->getMessage();
 		    $this->assertEquals(401, $e->getHttpStatus());
@@ -77,7 +86,7 @@ class TrustedSearch_DirectoryListingTest extends TrustedSearchTestCase{
 		    	$uuid = '45c907bc-6d2f-5f62-9610-5395858d41a0'; //Take from response above.
 		    	
 		      	$response = TrustedSearch_DirectoryListing::simulate($uuid);
-		      	var_dump(($response->getData()));
+		      	echo json_encode($response->getData());
 
 		    } catch (TrustedSearch_AuthenticationError $e) {
 		    	echo $e->getMessage();
