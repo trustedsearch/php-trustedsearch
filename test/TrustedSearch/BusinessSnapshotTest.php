@@ -43,7 +43,7 @@ class TrustedSearch_BusinessSnapshotTest extends TrustedSearchTestCase{
 		    $this->assertEquals(401, $e->getHttpStatus());
 	    }
 	}
-	
+
 	//@Travis Not sure why this is only returning a timestamp.
 	public function testGetBusinessSnapshotLocation(){
 
@@ -68,8 +68,8 @@ class TrustedSearch_BusinessSnapshotTest extends TrustedSearchTestCase{
 	}
 
 	public function testSimulateFulfillment(){
-		    TrustedSearch::setApiPublicKey('d7a6454ef686dfad24e08d773bc273eb');
-		    TrustedSearch::setApiPrivateKey('7lOx6Swg9e0yTjQz5laIfJQ9');
+		    TrustedSearch::setApiPublicKey($this->getTestCredentials('public_key'));
+		    TrustedSearch::setApiPrivateKey($this->getTestCredentials('private_key'));
 		    TrustedSearch::setApiEnvironment('local');
 		    TrustedSearch::setApiVersion('1');
 		    try {
