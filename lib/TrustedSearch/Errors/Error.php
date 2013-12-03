@@ -1,27 +1,36 @@
 <?php
+class TrustedSearch_Error extends Exception{
+  protected $rawBody;
+  protected $jsonBody;
 
-class TrustedSearch_Error extends Exception
-{
-  public function __construct($message=null, $http_status=null, $http_body=null, $json_body=null)
-  {
-    parent::__construct($message);
-    $this->http_status = $http_status;
-    $this->http_body = $http_body;
-    $this->json_body = $json_body;
+  public function __construct($message=null, $code=null, $rawBody=null, $jsonBody=null){
+    parent::__construct($message,$code);
+    $this->rawBody = $rawBody;
+    $this->jsonBody = $jsonBody;
   }
 
-  public function getHttpStatus()
-  {
-    return $this->http_status;
+  public function getRawBody(){
+    return $this->rawBody;
   }
 
-  public function getHttpBody()
-  {
-    return $this->http_body;
+  public function getJsonBody(){
+    return $this->jsonBody;
   }
 
-  public function getJsonBody()
-  {
-    return $this->json_body;
+  public function getValidations(){
+    return (array_key_exists('validations', $this->jsonBody)?$this->jsonBody['validations']:false);
   }
+
+  public function getErrorMessage(){
+    return (array_key_exists('message', $this->jsonBody)?$this->jsonBody['message']:false);
+  }  
+
+  public function getError(){
+    return (array_key_exists('error', $this->jsonBody)?$this->jsonBody['error']:false);
+  }
+
+  public function getDebug(){
+    return (array_key_exists('debug', $this->jsonBody)?$this->jsonBody['debug']:false);
+  }
+  
 }
