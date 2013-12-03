@@ -33,6 +33,8 @@ Then update your composer
 
 ## Usage
 
+To start using the gem, you need to be given your sandbox and production public & private keys.
+
 ### Basic Configuration
 ```php
 	require_once("/path/to/php-trustedsearch/lib/TrustedSearch.php");
