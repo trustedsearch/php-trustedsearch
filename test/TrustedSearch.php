@@ -33,13 +33,3 @@ error_reporting(E_ALL | E_STRICT);
 require_once(dirname(__FILE__) . '/../lib/TrustedSearch.php');
 
 require_once(dirname(__FILE__) . '/TrustedSearch/TestCase.php');
-
-// require_once(dirname(__FILE__) . '/TrustedSearch/ApiRequestorTest.php');
-// require_once(dirname(__FILE__) . '/TrustedSearch/AuthenticationErrorTest.php');
-// require_once(dirname(__FILE__) . '/TrustedSearch/Error.php');
-// require_once(dirname(__FILE__) . '/TrustedSearch/InvalidRequestErrorTest.php');
-// require_once(dirname(__FILE__) . '/TrustedSearch/ObjectTest.php');
-// require_once(dirname(__FILE__) . '/TrustedSearch/Token.php');
-// require_once(dirname(__FILE__) . '/TrustedSearch/UtilTest.php');
-
-

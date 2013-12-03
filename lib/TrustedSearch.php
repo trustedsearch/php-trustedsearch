@@ -38,5 +38,4 @@ require(dirname(__FILE__) . '/TrustedSearch/AttachedObject.php');
 // TrustedSearch API Resources
 require(dirname(__FILE__) . '/TrustedSearch/Resources/Token.php');
 require(dirname(__FILE__) . '/TrustedSearch/Resources/LocalBusiness.php');
-require(dirname(__FILE__) . '/TrustedSearch/Resources/BusinessSnapshot.php');
-
+require(dirname(__FILE__) . '/TrustedSearch/Resources/DirectoryListing.php');
