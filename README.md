@@ -224,7 +224,7 @@ Exceptions are thrown when there is an api issue.
 
 #### Exceptions
 
-* TrustedSearch_Error  ** Refer to [/lib/TrustedSearch/Errors/Error.php]() for special exception handle methods
+* TrustedSearch_Error  ** Refer to [/lib/TrustedSearch/Errors/Error.php](/lib/TrustedSearch/Errors/Error.php) for special exception handle methods
 * TrustedSearch_ApiConnectionError
 * TrustedSearch_ApiError
 * TrustedSearch_AuthenticationError
