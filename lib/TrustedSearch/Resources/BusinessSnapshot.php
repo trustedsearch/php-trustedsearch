@@ -15,7 +15,7 @@ class TrustedSearch_BusinessSnapshot extends TrustedSearch_ApiResource{
 		$params = array();
 
 		if($locationId){
-			$path = array($locationId);
+			$path = array('business-snapshots', $locationId);
 		}
 
 		if($since){
@@ -23,7 +23,7 @@ class TrustedSearch_BusinessSnapshot extends TrustedSearch_ApiResource{
 		}
 
 		$class = get_class();
-		return self::_customRetrieve($class, $path, $params, $apiPublicKey, $apiPrivateKey);		
+		return self::_get($class, $path, $params, $apiPublicKey, $apiPrivateKey);		
 	}
 
 	/**
@@ -36,11 +36,7 @@ class TrustedSearch_BusinessSnapshot extends TrustedSearch_ApiResource{
 	public static function simulate($locationId, $apiPublicKey=null, $apiPrivateKey=null){
 		$path = array('test-fulfillment', $locationId);
 		$class = get_class();
-		$instance = new $class($apiPublicKey, $apiPrivateKey);
-		$instance->setPath($path);
-		$url = $instance->instanceUrl();
-		$requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
-		return $requestor->request('post', $url);
+		return self::_put($class, $path, array(),'');
 	}
 
 }
