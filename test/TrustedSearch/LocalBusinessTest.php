@@ -22,7 +22,6 @@ class TrustedSearch_LocalBusinessTest extends TrustedSearchTestCase{
 	      $this->assertTrue(!empty($data[1]['uuid']), "There should be uuid returned.");
 	      $this->assertTrue(!empty($data[1]['status']), "There should be status returned.");
 
-
 	    } catch (TrustedSearch_AuthenticationError $e) {
 	    	echo $e->getMessage();
 		    $this->assertEquals(401, $e->getHttpStatus());
