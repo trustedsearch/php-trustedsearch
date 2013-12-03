@@ -117,16 +117,16 @@ class TrustedSearch_LocalBusinessTest extends TrustedSearchTestCase{
 	    TrustedSearch::setApiVersion('1');
 
 	    try {
-	      $locations = TrustedSearch_LocalBusiness::create($data);
-	      
-	      $this->assertEquals(count($locations), 2, 'There should be two results.');
-	      $this->assertTrue(!empty($locations[0]['externalId']), 'There should be an external id present.');
-	      $this->assertTrue(!empty($locations[0]['uuid']), "There should be uuid returned.");
-	      $this->assertTrue(!empty($locations[0]['status']), "There should be status returned.");
+	      $resource = TrustedSearch_LocalBusiness::create($data);
+	      $data = $resource->getData();
+	      $this->assertEquals(count($data), 2, 'There should be two results.');
+	      $this->assertTrue(!empty($data[0]['externalId']), 'There should be an external id present.');
+	      $this->assertTrue(!empty($data[0]['uuid']), "There should be uuid returned.");
+	      $this->assertTrue(!empty($data[0]['status']), "There should be status returned.");
 
-	      $this->assertTrue(!empty($locations[1]['externalId']), 'There should be an external id present.');
-	      $this->assertTrue(!empty($locations[1]['uuid']), "There should be uuid returned.");
-	      $this->assertTrue(!empty($locations[1]['status']), "There should be status returned.");
+	      $this->assertTrue(!empty($data[1]['externalId']), 'There should be an external id present.');
+	      $this->assertTrue(!empty($data[1]['uuid']), "There should be uuid returned.");
+	      $this->assertTrue(!empty($data[1]['status']), "There should be status returned.");
 
 
 	    } catch (TrustedSearch_AuthenticationError $e) {
