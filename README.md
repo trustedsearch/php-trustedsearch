@@ -194,6 +194,20 @@ $data = $resource->getData();
 echo json_encode($data);
 ```
 
+### Testing
+
+#### Testing / Simulating a change in a business listing
+
+```php
+
+$uuid = '45c907bc-6d2f-5f62-9610-5395858d41a0'; //Take from response above.
+$response = TrustedSearch_DirectoryListing::simulate($uuid);
+echo json_encode($response->getData());
+
+```
+
+
+
 ## Tests
 
 In order to run tests you have to install PHPUnit (https://packagist.org/packages/phpunit/phpunit) via Composer (http://getcomposer.org/) (recommended way):
