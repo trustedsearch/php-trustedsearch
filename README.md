@@ -33,7 +33,7 @@ Then update your composer
 
 ## Usage
 
-To start using the gem, you need to be given your sandbox and production public & private keys.
+To start using the package, you need to be given your sandbox and production public & private keys.
 
 ### Basic Configuration
 ```php
