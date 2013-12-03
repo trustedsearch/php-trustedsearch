@@ -47,10 +47,6 @@ class TrustedSearch_ApiRequestorTest extends TrustedSearchTestCase
       $method = $reflector->getMethod('_encodeObjects');
       $method->setAccessible(true);
 
-      $a = array('token' => new TrustedSearch_Token('abcd'));
-      $enc = $method->invoke(null, $a);
-      $this->assertEquals($enc, array('token' => 'abcd'));
-
       // Preserves UTF-8
       $v = array('token' => "☃");
       $enc = $method->invoke(null, $v);
