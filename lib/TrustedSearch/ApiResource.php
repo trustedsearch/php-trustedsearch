@@ -2,6 +2,10 @@
 
 abstract class TrustedSearch_ApiResource extends TrustedSearch_Object{
 
+  protected $_apiRequestPath;
+  protected $_apiRequestParams;
+  protected $_apiRequestBody;
+
   public static function className($class){
     // Useful for namespaces: Foo\TrustedSearch_Charge
     if ($postfix = strrchr($class, '\\'))
@@ -45,8 +49,8 @@ abstract class TrustedSearch_ApiResource extends TrustedSearch_Object{
 
   public function instanceUrl(){
     $url = '';
-    if(!empty($this->_apiPath)){
-      $url = $this->_lsb('pathUrl', $this->_apiPath);
+    if(!empty($this->_apiRequestPath)){
+      $url = $this->_lsb('pathUrl', $this->_apiRequestPath);
     }else{
       $class = get_class($this);
       $url = $this->_lsb('classUrl', $class);
@@ -56,11 +60,28 @@ abstract class TrustedSearch_ApiResource extends TrustedSearch_Object{
   }
 
   public function setPath($path = array()){
-    $this->_apiPath = $path;
+    if(!empty($path)){
+      $this->_apiRequestPath = $path;  
+    }
   }
 
   public function setParams($params = array()){
-    $this->_apiParams = $params;
+    if(!empty($params)){
+      $this->_apiRequestParams = $params;  
+    }
+  }
+
+  public function setResponse($response){
+    $this->_apiResponse = $response;
+  }
+
+  public function getResponse(){
+    return $this->_apiResponse;
+  }
+
+  public function getData(){
+    $data = $this->getResponse();
+    return $data['body'];
   }
 
   private static function _validateCall($method, $params=null, $apiPublicKey=null, $apiPrivateKey=null){
@@ -77,81 +98,37 @@ abstract class TrustedSearch_ApiResource extends TrustedSearch_Object{
     }
   }
 
-  protected static function _scopedRetrieve($class, $id, $apiPublicKey=null, $apiPrivateKey=null){
-    $instance = new $class($id, $apiPublicKey, $apiPrivateKey);
-    $instance->refresh();
-    return $instance;
-  }
-
-  protected static function _scopedAll($class, $params=null, $apiPublicKey=null, $apiPrivateKey=null){
-    self::_validateCall('all', $params, $apiPublicKey, $apiPrivateKey);
-    $requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
-    $url = self::_scopedLsb($class, 'classUrl', $class);
-    list($response, $apiPublicKey, $apiPrivateKey) = $requestor->request('get', $url, $params);
-    return TrustedSearch_Util::convertToTrustedSearchObject($response, $apiPublicKey, $apiPrivateKey);
-  }
-
-  protected static function _scopedCreate($class, $params=null, $body=null, $apiPublicKey=null, $apiPrivateKey=null){
-    self::_validateCall('create', $params, $apiPublicKey, $apiPrivateKey);
-    $requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
-
-    $url = self::_scopedLsb($class, 'classUrl', $class);
-    
-    list($response, $apiPublicKey, $apiPrivateKey) = $requestor->request('post', $url, $params, $body);
-    return TrustedSearch_Util::convertToTrustedSearchObject($response, $apiPublicKey, $apiPrivateKey);
-  }
-
-  protected function _scopedSave($class){
-    self::_validateCall('save');
-    $requestor = new TrustedSearch_ApiRequestor($this->_apiPublicKey);
-    $params = $this->serializeParameters();
-
-    if (count($params) > 0) {
-      $url = $this->instanceUrl();
-      list($response, $apiPublicKey, $apiPrivateKey) = $requestor->request('post', $url, $params);
-      $this->refreshFrom($response, $apiPublicKey, $apiPrivateKey);
-    }
-    return $this;
-  }
-
-  protected function _scopedDelete($class, $params=null){
-    self::_validateCall('delete');
-    $requestor = new TrustedSearch_ApiRequestor($this->_apiPublicKey);
-    $url = $this->instanceUrl();
-    list($response, $apiPublicKey, $apiPrivateKey) = $requestor->request('delete', $url, $params);
-    $this->refreshFrom($response, $apiPublicKey, $apiPrivateKey);
-    return $this;
-  }
-
-  protected static function _customRetrieve($class, $path = array(), $params=array(), $apiPublicKey=null, $apiPrivateKey=null){
-    $instance = new $class(null, $apiPublicKey, $apiPrivateKey);
-    $instance->setPath($path);
-    $instance->setParams($params);
-    $instance->refresh();
-    return $instance;
-  }
-
-  protected static function _customUpdate($class, $path = array(), $params=array(), $body='', $apiPublicKey=null, $apiPrivateKey=null){
+  protected static function _get($class, $path = array(), $params=array(), $apiPublicKey=null, $apiPrivateKey=null){
     $instance = new $class(null, $apiPublicKey, $apiPrivateKey);
     $instance->setPath($path);
     $instance->setParams($params);
     $url = $instance->instanceUrl();
     $requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
-    
-    list($response, $apiPublicKey, $apiPrivateKey) = $requestor->request('put', $url, $params, $body);
-    $instance->refreshFrom($response, $apiPublicKey, $apiPrivateKey);
+    $response = $requestor->request('get', $url, $params);
+    $instance->setResponse($response);
     return $instance;
+
   }
 
-  protected static function _customCreate($class, $path = array(), $params=array(), $body='', $apiPublicKey=null, $apiPrivateKey=null){
+  protected static function _put($class, $path = array(), $params=array(), $body='', $apiPublicKey=null, $apiPrivateKey=null){
     $instance = new $class(null, $apiPublicKey, $apiPrivateKey);
     $instance->setPath($path);
     $instance->setParams($params);
     $url = $instance->instanceUrl();
     $requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
-    
-    list($response, $apiPublicKey, $apiPrivateKey) = $requestor->request('post', $url, $params, $body);
-    $instance->refreshFrom($response, $apiPublicKey, $apiPrivateKey);
+    $response = $requestor->request('put', $url, $params, $body);
+    $instance->setResponse($response);
+    return $instance;
+  }
+
+  protected static function _post($class, $path = array(), $params=array(), $body='', $apiPublicKey=null, $apiPrivateKey=null){
+    $instance = new $class(null, $apiPublicKey, $apiPrivateKey);
+    $instance->setPath($path);
+    $instance->setParams($params);
+    $url = $instance->instanceUrl();
+    $requestor = new TrustedSearch_ApiRequestor($apiPublicKey, $apiPrivateKey);
+    $response = $requestor->request('post', $url, $params, $body);
+    $instance->setResponse($response);
     return $instance;
   }
 
