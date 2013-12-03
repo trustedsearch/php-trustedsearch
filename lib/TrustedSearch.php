@@ -13,29 +13,33 @@ if (!function_exists('mb_detect_encoding')) {
   throw new Exception('TrustedSearch needs the Multibyte String PHP extension.');
 }
 
-require __DIR__.'/../vendor/autoload.php';
+//Load autoload file if exists
+$trustedsearch_autoload_path = __DIR__.'/../vendor/autoload.php';
+if(file_exists($trustedsearch_autoload_path)){
+	require_once $trustedsearch_autoload_path;	
+}
 
 // TrustedSearch singleton
-require(dirname(__FILE__) . '/TrustedSearch/TrustedSearch.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/TrustedSearch.php');
 
 // Utilities
-require(dirname(__FILE__) . '/TrustedSearch/Util.php');
-require(dirname(__FILE__) . '/TrustedSearch/Util/Set.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Util.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Util/Set.php');
 
 // Errors
-require(dirname(__FILE__) . '/TrustedSearch/Errors/Error.php');
-require(dirname(__FILE__) . '/TrustedSearch/Errors/ApiError.php');
-require(dirname(__FILE__) . '/TrustedSearch/Errors/ApiConnectionError.php');
-require(dirname(__FILE__) . '/TrustedSearch/Errors/AuthenticationError.php');
-require(dirname(__FILE__) . '/TrustedSearch/Errors/InvalidRequestError.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Errors/Error.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Errors/ApiError.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Errors/ApiConnectionError.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Errors/AuthenticationError.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Errors/InvalidRequestError.php');
 
 // Plumbing
-require(dirname(__FILE__) . '/TrustedSearch/Object.php');
-require(dirname(__FILE__) . '/TrustedSearch/ApiRequestor.php');
-require(dirname(__FILE__) . '/TrustedSearch/ApiResource.php');
-require(dirname(__FILE__) . '/TrustedSearch/AttachedObject.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Object.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/ApiRequestor.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/ApiResource.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/AttachedObject.php');
 
 // TrustedSearch API Resources
-require(dirname(__FILE__) . '/TrustedSearch/Resources/Token.php');
-require(dirname(__FILE__) . '/TrustedSearch/Resources/LocalBusiness.php');
-require(dirname(__FILE__) . '/TrustedSearch/Resources/DirectoryListing.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Resources/Token.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Resources/LocalBusiness.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Resources/DirectoryListing.php');
