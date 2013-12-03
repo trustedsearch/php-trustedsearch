@@ -23,7 +23,7 @@ To get started, add the following to your PHP script:
 
 ### Composer
 
-Add below to your require block in your composer file
+Add the line below to your "require" block in your composer file
 
 	trustedsearch/php-trustedsearch
 
