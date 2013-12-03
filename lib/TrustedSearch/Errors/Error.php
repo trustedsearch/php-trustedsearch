@@ -4,6 +4,9 @@ class TrustedSearch_Error extends Exception{
   protected $jsonBody;
 
   public function __construct($message=null, $code=null, $rawBody=null, $jsonBody=null){
+    if(is_array($message)){
+      $message = json_encode($message);
+    }
     parent::__construct($message,$code);
     $this->rawBody = $rawBody;
     $this->jsonBody = $jsonBody;
