@@ -4,17 +4,8 @@ class TrustedSearch_Object implements ArrayAccess{
   public static $_permanentAttributes;
   public static $_nestedUpdatableAttributes;
 
-  public static function init(){
-    self::$_permanentAttributes = new TrustedSearch_Util_Set(array('_apiPublicKey','_apiPrivateKey', 'id'));
-    self::$_nestedUpdatableAttributes = new TrustedSearch_Util_Set(array('metadata'));
-  }
-
   protected $_apiPublicKey;
   protected $_apiPrivateKey;
-  protected $_apiPath;
-  protected $_apiParams;
-  protected $_apiBody;
-  
 
   protected $_values;
   protected $_unsavedValues;
@@ -30,6 +21,11 @@ class TrustedSearch_Object implements ArrayAccess{
 
   }
 
+  public static function init(){
+    self::$_permanentAttributes = new TrustedSearch_Util_Set(array('_apiPublicKey','_apiPrivateKey'));
+    self::$_nestedUpdatableAttributes = new TrustedSearch_Util_Set(array('metadata'));
+  }
+  
   // Standard accessor magic methods
   public function __set($k, $v){
     if ($v === ""){
