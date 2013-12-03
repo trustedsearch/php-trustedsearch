@@ -48,6 +48,19 @@ To start using the gem, you need to be given your sandbox and production public 
 
 ```
 
+#### Creating a Token.
+Tokens are used for whitelabel products.
+
+```php
+
+$resource = TrustedSearch_Token::get($username, $password);
+$data = $resource->getData();
+echo $data['token'];
+echo $data['expires'];
+echo json_encode($data['userSettings']);
+
+```
+
 #### Get All Business for all users locations
 See the [API documentation](http://developers.trustedsearch.org/#/get-business-updates) for a list of parameters for each API resource.
 
