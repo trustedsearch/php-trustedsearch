@@ -16,10 +16,8 @@ class TrustedSearch_TokenTest extends TrustedSearchTestCase
 
     try {
       $token = TrustedSearch_Token::get($username, $password);
-      //var_dump($token['userSettings']['client_view']);
     } catch (TrustedSearch_AuthenticationError $e) {
     	echo $e->getMessage();
-      echo "HI";
 	    $this->assertEquals(401, $e->getCode());
     }
   }
