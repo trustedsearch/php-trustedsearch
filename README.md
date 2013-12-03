@@ -261,6 +261,3 @@ Run test suite:
 
     php ./test/TrustedSearch.php
 
-
-### API Examples
-
