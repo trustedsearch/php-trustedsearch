@@ -29,6 +29,35 @@ class TrustedSearch_LocalBusinessTest extends TrustedSearchTestCase{
 	}
 
 
+	public function testGetLocalBusiness(){
+		
+		
+	
+	    TrustedSearch::setApiPublicKey($this->getTestCredentials('public_key'));
+	    TrustedSearch::setApiPrivateKey($this->getTestCredentials('private_key'));
+	    TrustedSearch::setApiEnvironment('local');
+	    TrustedSearch::setApiVersion('1');
+
+	    try {
+
+
+			$data = $this->getTestData();
+
+			$resource = TrustedSearch_LocalBusiness::create($data);
+			$data = $resource->getData();
+			$locationId = $data[0]['uuid'];
+			$resource = TrustedSearch_LocalBusiness::get($locationId);
+			$data = $resource->getData();
+			$this->assertEquals($data['business']['name'],"Jeremy's Umbrellas Shop", 'name should match.');
+
+	    } catch (TrustedSearch_AuthenticationError $e) {
+	    	echo $e->getMessage();
+	    	$this->assertTrue(false, "testGetLocalBusiness failed. this should not happen");
+		    $this->assertEquals(401, $e->getCode());
+	    }
+	}
+
+
 
 	public function testAddLocalBusinessFailNoExternalID(){
 		$data = $this->getTestData();
@@ -66,7 +95,7 @@ class TrustedSearch_LocalBusinessTest extends TrustedSearchTestCase{
 				'order' => array(
 					"onBehalfOf" => "Partner ABC",
 					'packages' => array(
-						'ut002500'
+						'23'
 					),
 					'termsAccepted' => true
 				),
@@ -119,7 +148,7 @@ class TrustedSearch_LocalBusinessTest extends TrustedSearchTestCase{
 				'order' => array(
 					"onBehalfOf" => "Partner ABC",
 					'packages' => array(
-						'ut002500'
+						'23'
 					),
 					'termsAccepted' => true
 				),
