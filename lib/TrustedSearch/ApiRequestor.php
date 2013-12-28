@@ -81,6 +81,7 @@ class TrustedSearch_ApiRequestor{
       //Handle Authentication/Signature
       switch (TrustedSearch::getApiVersion()) {
         case '1':
+        case '2':
 
           $timestamp = time();
           $request = array(
