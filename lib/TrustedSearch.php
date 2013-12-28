@@ -43,3 +43,4 @@ require_once(dirname(__FILE__) . '/TrustedSearch/AttachedObject.php');
 require_once(dirname(__FILE__) . '/TrustedSearch/Resources/Token.php');
 require_once(dirname(__FILE__) . '/TrustedSearch/Resources/LocalBusiness.php');
 require_once(dirname(__FILE__) . '/TrustedSearch/Resources/DirectoryListing.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Resources/PublisherHours.php');
