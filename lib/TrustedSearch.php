@@ -39,8 +39,12 @@ require_once(dirname(__FILE__) . '/TrustedSearch/ApiRequestor.php');
 require_once(dirname(__FILE__) . '/TrustedSearch/ApiResource.php');
 require_once(dirname(__FILE__) . '/TrustedSearch/AttachedObject.php');
 
-// TrustedSearch API Resources
+// TrustedSearch API Resources v1
 require_once(dirname(__FILE__) . '/TrustedSearch/Resources/Token.php');
 require_once(dirname(__FILE__) . '/TrustedSearch/Resources/LocalBusiness.php');
 require_once(dirname(__FILE__) . '/TrustedSearch/Resources/DirectoryListing.php');
+
+// TrustedSearch API Resources v2
 require_once(dirname(__FILE__) . '/TrustedSearch/Resources/PublisherHours.php');
+require_once(dirname(__FILE__) . '/TrustedSearch/Resources/Listing.php');
+

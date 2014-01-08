@@ -81,8 +81,24 @@ abstract class TrustedSearch_ApiResource extends TrustedSearch_Object{
 
   public function getData(){
     $data = $this->getResponse();
-    return $data['body'];
+    if(TrustedSearch::getApiVersion() == 1){
+      return $data['body'];  
+    }
+    if(TrustedSearch::getApiVersion() == 2){
+
+      return $data['body']['data'];  
+    }
   }
+
+  public function getPagination(){
+    $data = $this->getResponse();
+    if(TrustedSearch::getApiVersion() == 2){
+
+      return $data['body']['pagination'];  
+    }
+  }
+
+  
 
   private static function _validateCall($method, $params=null, $apiPublicKey=null, $apiPrivateKey=null){
     if ($params && !is_array($params)){
