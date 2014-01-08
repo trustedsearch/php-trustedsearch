@@ -61,6 +61,8 @@ echo json_encode($data['userSettings']);
 
 ```
 
+# Version 1 API's
+
 #### Get All Business for all users locations
 See the [API documentation](http://developers.trustedsearch.org/#/get-business-updates) for a list of parameters for each API resource.
 
@@ -221,6 +223,47 @@ echo json_encode($response->getData());
 
 ```
 
+# Version 2 API's
+
+Don't forget to switch versions before a series of these calls:
+
+```
+TrustedSearch::setApiVersion('2');
+```
+
+### What's New!
+
+* Detailed error messages that include validation errors.
+* Pagination
+* CRUD on Resources.
+* Standardized responses
+
+
+## Listings
+
+#### TrustedSearch_Listing::index
+Page through and filter down any listing associated w/ your account.
+
+See the [API documentation](http://developers.trustedsearch.org/#/listings) for a list of parameters for each API resource.
+
+```php
+
+$page = 1;
+$filters = array(
+	fulfillment_status_id = "33"
+);
+$perPage = 25;
+$sort = 'asc';
+$orderBy = 'created_at';
+
+$resource = TrustedSearch_Listing::index($page, $filters, $perPage, $sort, $orderBy);
+$data = $resource->getData();
+echo json_encode($data);
+
+```
+
+
+
 ### Error Handling
 Exceptions are thrown when there is an api issue.
 
@@ -234,6 +277,9 @@ Exceptions are thrown when there is an api issue.
     }
 
 ```
+
+
+
 
 #### Exceptions
 
@@ -266,6 +312,8 @@ Body:
 Code: 409
 
 ```
+
+
 
 ## Tests
 

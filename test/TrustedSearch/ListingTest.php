@@ -137,7 +137,7 @@ class TrustedSearch_ListingTest extends TrustedSearchTestCase{
 
 					  	//Set Data back for next test
 					  	$listingData = array(
-					  		'fulfillment_status_id' => '23'
+					  		'fulfillment_status_id' => '44'
 					  	);
 					  	TrustedSearch_Listing::update($original['id'], $listingData);
 						
