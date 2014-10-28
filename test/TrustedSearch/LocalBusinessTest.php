@@ -24,9 +24,38 @@ class TrustedSearch_LocalBusinessTest extends TrustedSearchTestCase{
 
 	    } catch (TrustedSearch_AuthenticationError $e) {
 	    	echo $e->getMessage();
-		    $this->assertEquals(401, $e->getHttpStatus());
+		    $this->assertEquals(401, $e->getCode());
 	    }
 	}
+
+    public function testValidateLocalBusiness(){
+
+        $data = $this->getTestData();
+
+        TrustedSearch::setApiPublicKey($this->getTestCredentials('public_key'));
+        TrustedSearch::setApiPrivateKey($this->getTestCredentials('private_key'));
+        TrustedSearch::setApiEnvironment('local');
+        TrustedSearch::setApiVersion('1');
+
+        try {
+            $resource = TrustedSearch_LocalBusiness::validate($data);
+            $data = $resource->getData();
+            $this->assertEquals(count($data), 2, 'There should be two results.');
+            $this->assertTrue(!empty($data[0]['externalId']), 'There should be an external id present.');
+            $this->assertTrue(!empty($data[0]['uuid']), "There should be uuid returned.");
+            $this->assertTrue(!empty($data[0]['status']), "There should be status returned.");
+
+            $this->assertTrue(!empty($data[1]['externalId']), 'There should be an external id present.');
+            $this->assertTrue(!empty($data[1]['uuid']), "There should be uuid returned.");
+            $this->assertTrue(!empty($data[1]['status']), "There should be status returned.");
+
+        } catch (TrustedSearch_InvalidRequestError $e) {
+            //print("Message" . $e->getMessage()."\n");
+            $output = json_encode($e->getValidations());
+            //print("Validations: " . $output);
+            $this->assertEquals(400, $e->getCode());
+        }
+    }
 
 
 	public function testGetLocalBusiness(){

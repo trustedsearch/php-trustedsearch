@@ -211,6 +211,27 @@ $data = $resource->getData();
 echo json_encode($data);
 ```
 
+
+
+#### Validating Business Listings
+
+See the [API documentation](http://http://developers.trustedsearch.org/#/v1-validate) for a list of parameters for each API resource.
+
+```php
+
+    $data = //Use same data structure as above to "Submit New Business Listings"
+ 
+    try{
+        $resource = TrustedSearch_LocalBusiness::validate($data);
+            $data = $resource->getData();
+            echo json_encode($data);
+    }catch(TrustedSearch_Error $e){
+        $errors = $e->getValidations();
+        echo $errors['business.descriptionShort'];
+        
+    }
+```
+
 ### Testing
 
 #### Testing / Simulating a change in a business listing

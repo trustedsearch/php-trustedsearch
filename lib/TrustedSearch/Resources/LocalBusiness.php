@@ -33,4 +33,12 @@ class TrustedSearch_LocalBusiness extends TrustedSearch_ApiResource{
 		return self::_get($class, $path, $params, $apiPublicKey, $apiPrivateKey);		
 	}
 
+    public static function validate($data=null, $apiPublicKey=null, $apiPrivateKey=null){
+        $path = array('validate');
+        $class = get_class();
+        return self::_post($class, $path, array(),$data, $apiPublicKey, $apiPrivateKey);
+    }
+
+
+
 }
